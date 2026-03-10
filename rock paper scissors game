@@ -1,0 +1,29 @@
+# rock paper scissor game using python programming
+
+import random
+
+choices = ["rock", "paper", "scissors"]
+
+
+
+user_choice = input("Enter rock , paper or scissors : ").lower()      # scissors    Scissors
+
+computer_choice = random.choice(choices)
+
+
+
+print("your choice ", user_choice)
+
+print("Computer choice ",computer_choice)
+
+if user_choice == computer_choice:
+    print("match draw")
+elif user_choice == "rock" and computer_choice == "scissors":
+    print("you win the match")
+elif user_choice == "paper" and computer_choice == "rock":
+    print("you win the match")
+elif user_choice == "scissors" and computer_choice == "paper":
+    print("you win the match")
+else:
+    print("computer win")
+
