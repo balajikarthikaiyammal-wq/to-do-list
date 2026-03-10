@@ -1,0 +1,44 @@
+# Import required libraries
+import numpy as np     # numpy - numberpython
+import pandas as pd
+
+# Step 1: Create product sales data
+products = ["Laptop", "Mobile", "Tablet", "Headphones", "Smartwatch"]
+
+# Sales quantity for 5 days (rows = products, columns = days)
+sales_data = np.array([
+    [10, 12, 11, 13, 15],
+    [20, 18, 22, 21, 19],
+    [8, 9, 7, 10, 6],            # laptop   day1   day2   day3    day4  day 5
+    [15, 14, 16, 18, 17],
+    [5, 6, 7, 5, 8]
+])
+
+# Step 2: Convert NumPy array to Pandas DataFrame
+df = pd.DataFrame(
+    sales_data,
+    index=products,
+    columns=["Day1", "Day2", "Day3", "Day4", "Day5"]
+)
+
+# Step 3: Display the dataset
+print("Sales Data:")
+print(df)
+
+# Step 4: Calculate total sales for each product
+df["Total Sales"] = df.sum(axis=1)
+
+# Step 5: Calculate average sales using NumPy
+df["Average Sales"] = np.mean(sales_data, axis=1)
+
+# Step 6: Find best selling product
+best_product = df["Total Sales"].idxmax()    # idxmax()   - index of maximum value
+
+# Step 7: Display final analysis
+print("\nSales Analysis:")
+print(df)
+
+print("\nBest Selling Product:", best_product)
+
+
+
