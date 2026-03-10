@@ -1,0 +1,25 @@
+
+
+import matplotlib.pyplot as plt
+
+
+companies = ["Apple", "Samsung", "xiaomi", "Oppo", "Others"]
+
+market_share = [30, 25, 20, 15, 10]
+
+
+plt.pie(market_share, labels = companies, autopct = '%1.1f%%')
+
+
+plt.title("Mobile market share")
+
+plt.show()
+
+
+
+
+
+
+
+
+
