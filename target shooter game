@@ -1,0 +1,103 @@
+
+# target shooting game
+
+import turtle
+
+import random
+
+
+screen = turtle.Screen()
+
+screen.title("Target Shooting Game")
+
+screen.bgcolor("lightblue")
+
+target = turtle.Turtle()
+
+target.shape("circle")
+
+target.color("red")
+
+target.penup()
+
+target.speed(0)         # 0 - fastest     1 - slowest   10 - fast
+
+score = 0
+
+score_pen = turtle.Turtle()
+
+score_pen.hideturtle()
+
+score_pen.penup()
+
+score_pen.goto(-200, 200)
+
+score_pen.write("Score : 0", font = ("Aerial", 16, "bold"))             # arg - arguments
+
+def move_target():
+    x = random.randint(-200, 200)
+    y = random.randint(-200, 200)
+    target.goto(x, y)
+
+
+def shoot(x, y):
+    global score
+    score += 1
+
+
+    score_pen.clear()
+
+
+    score_pen.write("Score : {}".format(score), font = ("Aerial", 16, "bold"))
+
+
+    move_target()
+
+
+
+target.onclick(shoot)
+
+move_target()
+
+
+
+
+
+
+screen.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
