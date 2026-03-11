@@ -1,0 +1,26 @@
+# expanse tracker
+
+expenses = []
+
+n = int(input("Enter a number of expenses : "))
+
+for i in range(n):
+    amount = float(input("Enter expense amount : "))
+    expenses.append(amount)
+
+
+total = sum(expenses)
+
+average = total / n      # n - len(expenses)
+
+maximum = max(expenses)
+
+
+print("\nExpense list : ", expenses)
+print("Total expense : ", total)
+print("Average expense : ", average)
+print("Highest expense : ", maximum)
+
+
+
+
