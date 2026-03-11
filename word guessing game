@@ -1,0 +1,51 @@
+import random
+
+print("Welcome to word guessing game")
+
+words = ["python", "robot", "computer", "engineer", "science"]
+
+secret_word = random.choice(words)
+display = ["_"] * len(secret_word)
+
+
+attempts = 6
+
+while attempts > 0 and "_" in display:
+
+    print("\ncurrent word : ", " ".join(display))   # _ _ _ _ _ _
+    print("Attempts left : ", attempts)
+
+    guess = input("Enter a guess : ").lower()
+
+    if guess in secret_word:
+
+        print("Correct guess!")
+        break
+        for i in range(len(secret_word)):     # python
+            if secret_word[i] == guess:
+                display[i] = guess
+
+
+    else:
+        print("wrong guess")
+        attempts -= 1
+
+
+if "_" not in display:
+    print("\nCongratulations! you guessed the word : ", secret_word)
+
+else:
+    print("Game over! the word was : ", secret_word)
+
+
+
+
+
+
+
+
+
+
+
+
+
