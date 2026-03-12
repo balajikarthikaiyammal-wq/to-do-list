@@ -1,0 +1,107 @@
+# Import tkinter module
+import tkinter as tk
+
+# Create main window
+window = tk.Tk()
+
+# Set window title
+window.title("To-Do List Manager")
+
+# Set window size
+window.geometry("400x400")
+
+# Set background color
+window.configure(bg="black")
+
+
+# -------- Functions --------
+
+# Function to add task
+def add_task():
+    task = task_entry.get()
+
+    if task != "":
+        task_listbox.insert(tk.END, task)
+        task_entry.delete(0, tk.END)
+
+
+# Function to delete selected task
+def delete_task():
+    selected = task_listbox.curselection()
+
+    if selected:
+        task_listbox.delete(selected)
+
+
+# Function to clear all tasks
+def clear_tasks():
+    task_listbox.delete(0, tk.END)
+
+
+# -------- Widgets --------
+
+# Title label
+title_label = tk.Label(
+    window,
+    text="My To-Do List",
+    font=("Arial", 20, "bold"),
+    fg="magenta",
+    bg="black"
+)
+
+title_label.pack(pady=10)
+
+# Entry box for task input
+task_entry = tk.Entry(
+    window,
+    width=30,
+    font=("Arial", 14)
+)
+
+task_entry.pack(pady=10)
+
+# Add button
+add_button = tk.Button(
+    window,
+    text="Add Task",
+    command=add_task,
+    bg="green",
+    fg="white"
+)
+
+add_button.pack(pady=5)
+
+# Delete button
+delete_button = tk.Button(
+    window,
+    text="Delete Selected Task",
+    command=delete_task,
+    bg="red",
+    fg="white"
+)
+
+delete_button.pack(pady=5)
+
+# Clear button
+clear_button = tk.Button(
+    window,
+    text="Clear All Tasks",
+    command=clear_tasks,
+    bg="orange",
+    fg="black"
+)
+
+clear_button.pack(pady=5)
+
+# Listbox to display tasks
+task_listbox = tk.Listbox(
+    window,
+    width=40,
+    height=10,
+    font=("Arial", 12)
+)
+
+task_listbox.pack(pady=20)
+
+# Run application
+window.mainloop()
