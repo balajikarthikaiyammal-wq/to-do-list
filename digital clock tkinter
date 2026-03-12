@@ -1,0 +1,45 @@
+# Import required modules
+import tkinter as tk
+from time import strftime
+
+# Create main window
+window = tk.Tk()
+
+# Set window title
+window.title("Digital Clock")
+
+# Set window size
+window.geometry("400x200")
+
+# Set background color
+window.configure(bg="black")
+
+
+# Function to update time
+def update_time():
+    # Get current time
+    current_time = strftime("%H:%M:%S %p")       #   %p  - PM  - prime meridian
+
+    # Update label text
+    clock_label.config(text=current_time)
+
+    # Call this function again after 1000 milliseconds (1 second)
+    clock_label.after(1000, update_time)
+
+
+# Create clock label
+clock_label = tk.Label(
+    window,
+    font=("Arial", 40, "bold"),
+    background="black",
+    foreground="magenta"
+)
+
+# Place label in center
+clock_label.pack(anchor="center", pady=40)
+
+# Start the clock
+update_time()
+
+# Run GUI
+window.mainloop()
