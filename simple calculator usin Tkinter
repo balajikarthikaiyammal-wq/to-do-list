@@ -1,0 +1,94 @@
+# Import the Tkinter library
+import tkinter as tk     # GUI
+
+# Create the main window object
+window = tk.Tk()
+
+# Set window title
+window.title("Simple Calculator")
+
+# Set window size
+window.geometry("300x250")
+
+
+# ----------- Functions -----------
+
+# Function for addition
+def add():
+    # Get value from entry box 1
+    num1 = float(entry1.get())
+
+    # Get value from entry box 2
+    num2 = float(entry2.get())
+
+    # Perform addition
+    result = num1 + num2
+
+    # Display result in label
+    result_label.config(text="Result: " + str(result))
+
+
+# Function for subtraction
+def subtract():
+    num1 = float(entry1.get())
+    num2 = float(entry2.get())
+    result = num1 - num2
+    result_label.config(text="Result: " + str(result))
+
+
+# Function for multiplication
+def multiply():
+    num1 = float(entry1.get())
+    num2 = float(entry2.get())
+    result = num1 * num2
+    result_label.config(text="Result: " + str(result))
+
+
+# Function for division
+def divide():
+    num1 = float(entry1.get())
+    num2 = float(entry2.get())
+    result = num1 / num2
+    result_label.config(text="Result: " + str(result))
+
+
+# ----------- Widgets -----------
+
+# Label for first number
+label1 = tk.Label(window, text="Enter First Number")
+label1.pack()
+
+# Entry box for first number
+entry1 = tk.Entry(window)
+entry1.pack()
+
+# Label for second number
+label2 = tk.Label(window, text="Enter Second Number")
+label2.pack()
+
+# Entry box for second number
+entry2 = tk.Entry(window)
+entry2.pack()
+
+# Addition button
+btn_add = tk.Button(window, text="Add", command=add)
+btn_add.pack()
+
+# Subtraction button
+btn_sub = tk.Button(window, text="Subtract", command=subtract)
+btn_sub.pack()
+
+# Multiplication button
+btn_mul = tk.Button(window, text="Multiply", command=multiply)
+btn_mul.pack()
+
+# Division button
+btn_div = tk.Button(window, text="Divide", command=divide)
+btn_div.pack()
+
+# Label to display result
+result_label = tk.Label(window, text="Result: ")
+result_label.pack()
+
+# Run the GUI application
+window.mainloop()
