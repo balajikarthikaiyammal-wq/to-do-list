@@ -1,0 +1,48 @@
+import statistics as st
+
+marks = [78, 85, 92, 88, 76, 95, 89, 92, 84, 76]
+
+mean_value = st.mean(marks)
+
+median_value = st.median(marks)
+
+
+mode_value = st.mode(marks)
+
+variance_value = st.variance(marks)
+
+stdev_value = st.stdev(marks)
+
+
+highest = max(marks)
+
+lowest = min(marks)
+
+
+
+print("Student mark analysis")
+
+
+
+print(".....................................")
+
+print("mark list : ", marks)
+
+print("mean : ", mean_value)
+print("median : ", median_value)
+
+print("mode : ", mode_value)
+
+print("variance : ", variance_value)
+
+print("standard deviation : ", stdev_value)
+
+
+print("highest mark : ", highest)
+
+print("lowest : ", lowest)
+
+
+
+
+
