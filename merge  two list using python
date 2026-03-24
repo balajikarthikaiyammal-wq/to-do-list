@@ -1,0 +1,37 @@
+
+
+
+# merge the two list
+
+list1 = list(map(int, input("Enter a sorted list : ").split()))    #[ 2 ,3 ,4 ,5, 6  ]
+
+
+list2 = list(map(int, input("Enter a sorted list : ").split()))
+
+
+i = j = 0
+
+
+merged = []
+
+while i < len(list1) and j < len(list2):
+    if list1[i] < list2[j]:
+        merged.append(list1[i])
+        i += 1
+
+    else:
+        merged.append(list2[j])
+        j += 1
+
+while i < len(list1):
+    merged.append(list1[i])
+    i += 1
+
+
+while j < len(list2):
+    merged.append(list2[j])
+    j += 1
+
+
+
+print("merged list : ", merged)
