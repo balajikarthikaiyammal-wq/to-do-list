@@ -1,0 +1,20 @@
+
+
+import pandas as pd
+
+
+data = {
+    "Name" : ["A", "B", "C", "D", "E"],
+    "Department" : ["IT", "HR", "IT", "HR", "IT"],
+    "Salary" : [50000, 60000, 70000, 65000, 80000]
+}
+
+
+df = pd.DataFrame(data)
+
+
+result = df.groupby("Department")["Salary"].mean()
+
+print(result)
+
+
