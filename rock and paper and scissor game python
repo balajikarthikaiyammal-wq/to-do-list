@@ -1,0 +1,115 @@
+import random
+from enum import Enum
+
+class Choice(Enum):
+    ROCK = "rock"
+    PAPER = "paper"
+    SCISSORS = "scissors"
+
+WINNING_COMBOS = {
+    Choice.ROCK: Choice.SCISSORS,
+    Choice.PAPER: Choice.ROCK,
+    Choice.SCISSORS: Choice.PAPER,
+}
+
+EMOJI = {
+    Choice.ROCK: "🪨",
+    Choice.PAPER: "📄",
+    Choice.SCISSORS: "✂️",
+}
+
+def get_computer_choice() -> Choice:
+    return random.choice(list(Choice))
+
+def get_player_choice() -> Choice:
+    options = {str(i + 1): c for i, c in enumerate(Choice)}
+    print("\n  Choose your move:")
+    for key, choice in options.items():
+        print(f"  [{key}] {EMOJI[choice]}  {choice.value.capitalize()}")
+
+    while True:
+        user_input = input("\n  Enter 1, 2, or 3: ").strip()
+        if user_input in options:
+            return options[user_input]
+        print("  ❌ Invalid input. Please enter 1, 2, or 3.")
+
+def determine_winner(player: Choice, computer: Choice) -> str:
+    if player == computer:
+        return "draw"
+    return "player" if WINNING_COMBOS[player] == computer else "computer"
+
+def display_result(player: Choice, computer: Choice, winner: str, scores: dict) -> None:
+    print("\n" + "─" * 40)
+    print(f"  You chose   : {EMOJI[player]}  {player.value.capitalize()}")
+    print(f"  Computer    : {EMOJI[computer]}  {computer.value.capitalize()}")
+    print("─" * 40)
+
+    if winner == "draw":
+        print("  🤝  It's a draw!")
+    elif winner == "player":
+        print("  🎉  You win this round!")
+    else:
+        print("  💻  Computer wins this round!")
+
+    print(f"\n  Score → You: {scores['player']}  |  Computer: {scores['computer']}  |  Draws: {scores['draws']}")
+    print("─" * 40)
+
+def display_banner() -> None:
+    print("\n" + "=" * 40)
+    print("   🪨  ROCK  📄  PAPER  ✂️  SCISSORS   ")
+    print("=" * 40)
+
+def display_final_summary(scores: dict) -> None:
+    total = scores["player"] + scores["computer"] + scores["draws"]
+    print("\n" + "=" * 40)
+    print("         📊  GAME SUMMARY")
+    print("=" * 40)
+    print(f"  Total Rounds : {total}")
+    print(f"  Your Wins    : {scores['player']}")
+    print(f"  Computer Wins: {scores['computer']}")
+    print(f"  Draws        : {scores['draws']}")
+    print("─" * 40)
+
+    if scores["player"] > scores["computer"]:
+        print("  🏆  Overall Winner: YOU! Congratulations!")
+    elif scores["computer"] > scores["player"]:
+        print("  🤖  Overall Winner: Computer. Better luck next time!")
+    else:
+        print("  🤝  Overall Result: It's a tie!")
+
+    print("=" * 40 + "\n")
+
+def ask_play_again() -> bool:
+    while True:
+        answer = input("\n  Play again? (y/n): ").strip().lower()
+        if answer in ("y", "yes"):
+            return True
+        if answer in ("n", "no"):
+            return False
+        print("  ❌ Please enter 'y' or 'n'.")
+
+def main() -> None:
+    scores = {"player": 0, "computer": 0, "draws": 0}
+    display_banner()
+
+    while True:
+        player_choice = get_player_choice()
+        computer_choice = get_computer_choice()
+        winner = determine_winner(player_choice, computer_choice)
+
+        if winner == "player":
+            scores["player"] += 1
+        elif winner == "computer":
+            scores["computer"] += 1
+        else:
+            scores["draws"] += 1
+
+        display_result(player_choice, computer_choice, winner, scores)
+
+        if not ask_play_again():
+            display_final_summary(scores)
+            print("  Thanks for playing! Goodbye 👋\n")
+            break
+
+if __name__ == "__main__":
+    main()
