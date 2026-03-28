@@ -1,0 +1,18 @@
+
+
+import pandas as pd
+
+data = {
+    "Name" : ["A", "B", "C", "D"],
+    "Salary" : [40000, 60000, 50000, 70000]
+}
+
+df = pd.DataFrame(data)
+
+max_salary = df["Salary"].max()
+
+result = df[df["Salary"] == max_salary]
+
+print(result)
+
+
