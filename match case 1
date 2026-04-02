@@ -1,0 +1,13 @@
+def check(x):
+    match x:
+        case 1 | 2 | 3:
+            return "small"            # | - or
+
+        case 4 | 5:
+            return "medium"
+
+        case __:
+            return "large"
+
+
+print(check(89))
