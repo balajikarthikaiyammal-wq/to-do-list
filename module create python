@@ -1,0 +1,43 @@
+'''import Student
+# code file
+marks = [80, 75, 90, 85, 70]
+
+total = Student.calculate_total(marks)
+
+avg = Student.calculate_average(marks)
+
+grade = Student.get_grade(avg)
+
+print("Total : ", total)
+
+print("average : ", avg)
+
+print("grade  : ", grade)
+'''
+
+
+'''
+# Student file
+def calculate_total(marks):
+    return sum(marks)
+
+def calculate_average(marks):
+    return sum(marks) / len(marks)
+
+def get_grade(avg):
+    if avg >= 90:
+        return "A"
+    elif avg >= 75:
+        return "B"
+    elif avg >= 60:
+        return "C"
+    else:
+        return "Fail"
+'''
+
+
+
+
+
+
+
