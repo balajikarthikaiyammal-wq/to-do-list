@@ -1,0 +1,64 @@
+import matplotlib.pyplot as plt
+
+subjects = ["maths", "physics", "chemistry", "Tamil", "computer"]
+
+
+marks = []
+
+for sub in subjects:
+    mark = int(input(f"Enter marks for {sub} : "))
+    marks.append(mark)
+
+
+total = sum(marks)
+
+average = total / len(marks)
+
+
+if average >= 90:
+    grade = "A+"
+elif average >= 75:
+    grade = "A"
+elif average >= 60:
+    grade = "B"
+elif average >= 50:
+    grade = "C"
+else:
+    grade = "Fail"
+
+
+
+
+print("Result..........")
+print("Total marks : ", total)
+
+print("average marks : ", average)
+
+
+print("grade : ", grade)
+
+
+plt.bar(subjects, marks)
+
+
+plt.title("Student mark analysis")
+
+plt.xlabel("Subjects")
+
+plt.ylabel("marks")
+
+
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
