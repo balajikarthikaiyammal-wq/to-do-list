@@ -1,0 +1,26 @@
+
+choice = input("Enter 'w' to write or 'r' to read : ")
+
+
+if choice == 'w':
+    note = input("Enter your note : ")
+    file = open("notes.txt", "a")
+    file.write(note + "\n")
+    file.close()
+    print("Note saved successfully")
+
+elif choice == 'r':
+    file = open("notes.txt", 'r')
+    content = file.read()
+    print("saved notes : ", content)
+    file.close()
+
+
+else:
+    print("Invalid choice")
+
+
+
+
+
+
