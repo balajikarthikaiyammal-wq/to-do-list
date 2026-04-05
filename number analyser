@@ -1,0 +1,45 @@
+# number analyser
+
+
+num = int(input("Enter a number : "))
+
+if num > 0:
+    print("The number is positive")
+elif num < 0:
+    print("The number is negative")
+else:
+    print("The number is zero")
+
+if num % 2 == 0:
+    print("The number is even")
+else:
+    print("The number is odd")
+
+if num > 1:
+    is_prime = True
+
+    for i in range(2, num):
+        if num % i == 0:
+            is_prime = False
+            break
+    if is_prime:
+        print("The number is prime")
+    else:
+        print("The number is not prime")
+
+else:
+    print("The number is not prime")
+
+
+
+temp = abs(num)    # abs - absolute
+
+digit_sum = 0
+
+while temp > 0:
+    digit = temp % 10
+    digit_sum += digit
+
+    temp = temp // 10
+
+print("Sum of digits : ", digit_sum)
