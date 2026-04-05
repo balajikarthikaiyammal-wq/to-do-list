@@ -1,0 +1,26 @@
+
+students = {}
+
+n = int(input("Enter number of students : "))
+
+for i in range(n):
+    name = input("Enter a student name : ")
+    marks = int(input("Enter marks : "))
+
+    students[name] = marks
+
+sorted_students = sorted(students.items(), key = lambda x : x[1], reverse = True)
+
+
+# [ ('a', 78), ('b', 89)]
+
+
+
+print("..........rank list..............")
+
+
+rank = 1
+
+for name, marks in sorted_students:
+    print(rank, ".", name, "_", marks)
+    rank += 1
