@@ -1,0 +1,25 @@
+
+# calculator using functions
+
+
+def calculate(a, b, op):
+    if op == "+":
+        return a + b
+    elif op == "-":
+        return a - b
+    elif op == "*":
+        return a * b
+    elif op == "/":
+        return a / b if b != 0 else "Division by zero"
+    else:
+        return "Invalid operation"
+
+
+x = float(input("Enter first number : "))
+
+y = float(input("Enter second number : "))
+
+operator = input("Enter operation : ")
+
+
+print("Result : ", calculate(x, y, operator))
