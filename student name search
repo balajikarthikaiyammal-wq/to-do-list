@@ -1,0 +1,21 @@
+
+students = {}
+
+
+n = int(input("Enter a number of students : "))
+
+
+for i in range(n):
+    name = input("Enter name : ")
+    marks = float(input("Enter marks : "))
+
+    students[name] = marks
+
+
+search = input("Enter name of student : ")
+
+if search in students:
+    print("marks : ",students[search])
+else:
+    print("student not found")
+
