@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ice Cream World 🍦</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&amp;family=Playfair+Display:wght@700&amp;display=swap');
+
+        :root {
+            --tw-color-primary: #f97316;
+        }
+
+        * {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .heading-font {
+            font-family: 'Playfair Display', sans-serif;
+        }
+
+        /* Animated clouds background */
+        .sky-bg {
+            background: linear-gradient(180deg, #bae6fd 0%, #f0f9ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(255,255,255,0.8);
+            animation: drift linear infinite;
+            opacity: 0.9;
+        }
+
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+        }
+
+        @keyframes drift {
+            from {
+                transform: translateX(-300px);
+            }
+            to {
+                transform: translateX(calc(100vw + 300px));
+            }
+        }
+
+        /* Ice cream floating animation */
+        .floating-icecream {
+            animation: floatIceCream 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIceCream {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(8deg); }
+        }
+
+        /* Card hover effect */
+        .ice-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ice-card:hover {
+            transform: scale(1.08) rotate(2deg);
+            box-shadow: 25px 25px 0 -10px #f97316;
+        }
+
+        /* Cart slide in */
+        .cart-slide {
+            animation: slideIn 0.4s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Rainbow text for heading */
+        .rainbow-text {
+            background: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6, #06b67f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 4s linear infinite;
+        }
+
+        .modal {
+            animation: modalPop 0.3s ease forwards;
+        }
+
+        .hero-ice {
+            filter: drop-shadow(0 25px 25px rgba(249, 115, 22, 0.4));
+        }
+    </style>
+</head>
+<body class="sky-bg">
+    <!-- NAVBAR -->
+    <nav class="bg-white/90 backdrop-blur-md border-b-4 border-orange-400 sticky top-0 z-50 shadow-xl">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="text-5xl floating-icecream">🍦</div>
+                <h1 class="heading-font text-4xl rainbow-text tracking-tighter">ICE CREAM WORLD</h1>
+            </div>
+
+            <!-- Menu -->
+            <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+                <a onclick="navigateToSection('home')" class="flex items-center gap-1 hover:text-orange-500">
+                    🏠 Home
+                </a>
+                <a onclick="navigateToSection('menu')" class="flex items-center gap-1 hover:text-orange-500">
+                    🍨 Menu
+                </a>
+                <a onclick="showCart()" class="flex items-center gap-1 hover:text-orange-500 relative">
+                    🛒 Cart
+                    <span id="cart-count-badge" class="absolute -top-1 -right-1 bg-pink-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+                <a onclick="showCustomerCare()" class="flex items-center gap-1 hover:text-orange-500">
+                    💬 Customer Care
+                </a>
+            </div>
+
+            <!-- Right side -->
+            <div class="flex items-center gap-4">
+                <div onclick="showLocation()" class="flex items-center gap-1 bg-sky-100 text-sky-700 px-4 py-2 rounded-3xl text-sm font-semibold cursor-pointer hover:bg-sky-200">
+                    📍 Madurai, Tamil Nadu
+                </div>
+
+                <div onclick="showCart()" class="relative cursor-pointer">
+                    <div class="text-4xl">🛒</div>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full px-2 py-px font-bold">0</span>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-4xl">🍦</button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-6 py-4 flex flex-col gap-4 text-lg">
+            <a onclick="navigateToSection('home');toggleMobileMenu()" class="py-3 border-b flex items-center gap-3">🏠 Home</a>
+            <a onclick="navigateToSection('menu');toggleMobileMenu()" class="py-3 border-b flex items-center gap-3">🍨 Full Menu</a>
+            <a onclick="showCart();toggleMobileMenu()" class="py-3 border-b flex items-center gap-3">🛒 Your Cart</a>
+            <a onclick="showCustomerCare();toggleMobileMenu()" class="py-3 border-b flex items-center gap-3">💬 Talk to Us</a>
+            <div class="pt-4 flex justify-center">
+                <button onclick="toggleMobileMenu()" class="bg-orange-500 text-white px-8 py-3 rounded-3xl text-xl flex items-center gap-2">
+                    🍦 Start Scooping!
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION - Big clouds + floating ice cream -->
+    <section id="home" class="sky-bg min-h-screen flex items-center relative pt-12">
+        <!-- Multiple moving clouds -->
+        <div class="cloud" style="width: 220px; height: 90px; top: 15%; animation-duration: 25s; left: -10%; box-shadow: 30px 15px 0 -20px white, 60px 25px 0 -30px white;"></div>
+        <div class="cloud" style="width: 280px; height: 110px; top: 35%; animation-duration: 35s; animation-delay: 8s; left: -15%; box-shadow: 40px 20px 0 -25px white, 75px 30px 0 -35px white;"></div>
+        <div class="cloud" style="width: 180px; height: 80px; top: 8%; animation-duration: 18s; animation-delay: 3s; left: -5%; box-shadow: 25px 12px 0 -18px white, 55px 22px 0 -28px white;"></div>
+        <div class="cloud" style="width: 250px; height: 95px; top: 55%; animation-duration: 42s; animation-delay: 12s; left: -20%; box-shadow: 35px 18px 0 -22px white, 70px 28px 0 -32px white;"></div>
+        <div class="cloud" style="width: 200px; height: 85px; top: 22%; animation-duration: 28s; animation-delay: 18s; left: -8%; box-shadow: 28px 14px 0 -20px white, 60px 24px 0 -30px white;"></div>
+
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-3 bg-white/80 backdrop-blur rounded-3xl px-6 py-3 text-2xl shadow-inner">
+                    ✨ Welcome to the happiest place on earth ✨
+                </div>
+
+                <h1 class="heading-font text-7xl md:text-8xl leading-none font-bold text-orange-600 rainbow-text">
+                    ICE CREAM<br>WORLD 🍦
+                </h1>
+
+                <p class="text-3xl text-gray-700 max-w-md">
+                    10 magical flavours • Freshly scooped • Delivered with love ❤️
+                </p>
+
+                <div class="flex items-center gap-4">
+                    <button onclick="navigateToSection('menu')"
+                            class="bg-gradient-to-r from-orange-500 to-pink-500 text-white text-3xl px-12 py-6 rounded-3xl flex items-center gap-4 hover:scale-110 shadow-2xl">
+                        <span>SCOOP NOW!</span>
+                        <span class="text-5xl">🍨</span>
+                    </button>
+
+                    <div onclick="showCustomerCare()" class="cursor-pointer text-center">
+                        <div class="text-6xl mb-1">💬</div>
+                        <div class="text-sm font-semibold uppercase tracking-widest">Talk to our<br>ice cream elves</div>
+                    </div>
+                </div>
+
+                <div class="flex gap-8 text-xl">
+                    <div class="flex items-center gap-2">
+                        <span class="text-4xl">🚚</span>
+                        <div>
+                            <div class="font-bold">30 min delivery</div>
+                            <div class="text-sm text-gray-600">in Madurai &amp; nearby</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-4xl">⭐</span>
+                        <div>
+                            <div class="font-bold">4.9/5 Happy Customers</div>
+                            <div class="text-sm text-gray-600">10,248 scoops today!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating hero ice cream -->
+            <div class="relative flex justify-center">
+                <div class="text-[280px] floating-icecream hero-ice">🍦</div>
+                <div class="absolute top-12 right-12 text-8xl rotate-12 animate-bounce">🍨</div>
+                <div class="absolute bottom-16 left-12 text-7xl -rotate-12">🍧</div>
+                <div class="absolute -top-6 left-1/3 text-6xl">🌈</div>
+
+                <!-- Little ice cream giving animation -->
+                <div class="absolute bottom-8 right-8 bg-white rounded-3xl shadow-2xl p-4 flex items-center gap-3 text-2xl">
+                    <span class="text-orange-500">Here’s your scoop!</span>
+                    <span class="text-5xl">🍦</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="absolute bottom-10 left-1/2 flex gap-8 text-sm font-medium bg-white/70 backdrop-blur-md px-8 py-4 rounded-3xl shadow-xl">
+            <div class="flex items-center gap-2">✅ Online Payment</div>
+            <div class="flex items-center gap-2">✅ Cash on Delivery</div>
+            <div class="flex items-center gap-2">✅ 100% Fresh</div>
+            <div class="flex items-center gap-2">✅ 10 Flavours</div>
+        </div>
+    </section>
+
+    <!-- MENU SECTION -->
+    <section id="menu" class="max-w-7xl mx-auto px-6 py-16">
+        <div class="text-center mb-12">
+            <span class="px-6 py-2 bg-orange-100 text-orange-600 rounded-3xl text-sm font-bold tracking-[2px]">OUR 10 MAGICAL FLAVOURS</span>
+            <h2 class="heading-font text-6xl mt-4 mb-3">Pick your happiness 🍦</h2>
+            <p class="text-2xl text-gray-600">Every scoop is made with love and real ingredients!</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8" id="menu-grid">
+            <!-- Populated by Jinja / Flask -->
+            {% for item in ice_creams %}
+            <div class="ice-card bg-white rounded-3xl overflow-hidden shadow-xl border-4 border-orange-200">
+                <div class="relative">
+                    <img src="{{ item.img }}" alt="{{ item.name }}"
+                         class="w-full h-48 object-cover">
+                    <div class="absolute top-4 right-4 bg-white text-orange-500 text-4xl px-4 rounded-2xl shadow-inner flex items-center">
+                        🍦
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-semibold">{{ item.name }}</h3>
+                            <p class="text-orange-500 text-sm font-medium">{{ item.flavor }} • ₹{{ item.price }}</p>
+                        </div>
+                        <div class="text-4xl">🍨</div>
+                    </div>
+                    <p class="text-gray-600 text-sm mt-3 line-clamp-2">{{ item.desc }}</p>
+
+                    <button onclick="addToCart({{ item.id }})"
+                            class="mt-6 w-full bg-gradient-to-r from-orange-400 to-pink-400 text-white py-4 rounded-3xl text-xl font-bold flex items-center justify-center gap-2 hover:from-pink-400 hover:to-orange-400">
+                        ADD TO CART
+                        <span class="text-3xl">🛒</span>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- WHY US SECTION - colourful -->
+    <div class="bg-gradient-to-r from-pink-200 via-yellow-100 to-sky-200 py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-5xl heading-font mb-8">Why Madurai LOVES Ice Cream World ❤️</h2>
+            <div class="grid grid-cols-3 gap-6 text-center">
+                <div class="bg-white rounded-3xl p-8 shadow-inner">
+                    <div class="text-6xl mb-4">🚀</div>
+                    <h4 class="font-bold text-xl">Lightning Delivery</h4>
+                    <p class="mt-2">30 minutes or your ice cream is FREE!</p>
+                </div>
+                <div class="bg-white rounded-3xl p-8 shadow-inner">
+                    <div class="text-6xl mb-4">🌱</div>
+                    <h4 class="font-bold text-xl">100% Natural</h4>
+                    <p class="mt-2">No preservatives • Real fruits • Pure joy</p>
+                </div>
+                <div class="bg-white rounded-3xl p-8 shadow-inner">
+                    <div class="text-6xl mb-4">💖</div>
+            
