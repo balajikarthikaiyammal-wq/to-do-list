@@ -1,0 +1,25 @@
+
+# Churn Rate Calculation Program
+
+total_customers = 100
+lost_customers = 20
+
+# Step 1: Calculate churn rate
+churn_rate = (lost_customers / total_customers) * 100
+
+# Step 2: Display result
+print("Churn Rate:", churn_rate, "%")
+
+# Step 3: Business insight
+if churn_rate > 25:
+    print("High Risk: Many customers leaving!")
+elif churn_rate > 10:
+    print("Moderate Risk: Needs attention")
+else:
+    print("Good: Customer retention is healthy")
+
+
+
+
+
+
