@@ -1,0 +1,26 @@
+# Customer Churn Analysis (Interview Level Mini Project)
+
+import pandas as pd
+
+# Step 1: Create sample dataset
+data = {
+    "CustomerID": [101, 102, 103, 104, 105],
+    "MonthlySpend": [500, 200, 150, 800, 300],
+    "ContractMonths": [12, 2, 1, 24, 3],
+    "SupportCalls": [1, 5, 6, 0, 4]
+}
+
+df = pd.DataFrame(data)
+
+# Step 2: Define churn logic
+df["Churn"] = (
+    (df["MonthlySpend"] < 300) &
+    (df["ContractMonths"] < 6) &
+    (df["SupportCalls"] > 3)
+)
+
+# Step 3: Results
+churn_count = df["Churn"].sum()
+print("Total Customers Likely to Churn:", churn_count)
+
+print("\nChurn Customers Data:\n", df[df["Churn"]])
