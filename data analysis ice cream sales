@@ -1,0 +1,127 @@
+# ================================
+# ICE CREAM SALES DATA ANALYSIS
+# ================================
+
+# Import required libraries
+import pandas as pd              # For data handling
+import numpy as np               # For numerical operations
+import random                    # For random data generation
+from datetime import datetime, timedelta  # For date handling
+
+# -------------------------------
+# Step 1: Create Dataset
+# -------------------------------
+
+# Define ice cream types
+ice_cream_types = ["Vanilla", "Chocolate", "Strawberry", "Mango", "Butterscotch"]
+
+# Define price range
+price_range = {
+    "Vanilla": 50,
+    "Chocolate": 60,
+    "Strawberry": 55,
+    "Mango": 65,
+    "Butterscotch": 70
+}
+
+# Generate random dates
+def generate_dates(n):
+    start_date = datetime(2023, 1, 1)
+    return [start_date + timedelta(days=i) for i in range(n)]
+
+# Number of records
+num_records = 1000
+
+# Create empty list
+data = []
+
+# Generate dataset
+for i in range(num_records):
+    date = generate_dates(num_records)[i]
+    temp = random.randint(20, 45)  # Temperature in Celsius
+    ice_type = random.choice(ice_cream_types)
+    price = price_range[ice_type]
+
+    # Sales logic (higher temp → more sales)
+    units_sold = random.randint(50, 200) + (temp * 2)
+
+    revenue = units_sold * price
+
+    data.append([date, temp, ice_type, price, units_sold, revenue])
+
+# Create DataFrame
+df = pd.DataFrame(data, columns=[
+    "Date", "Temperature", "IceCreamType",
+    "Price", "UnitsSold", "Revenue"
+])
+
+# -------------------------------
+# Step 2: Data Cleaning
+# -------------------------------
+
+# Check missing values
+print("Missing Values:\n", df.isnull().sum())
+
+# Convert Date column
+df["Date"] = pd.to_datetime(df["Date"])
+
+# Add Month column
+df["Month"] = df["Date"].dt.month
+
+# -------------------------------
+# Step 3: Basic Analysis
+# -------------------------------
+
+# Total revenue
+total_revenue = df["Revenue"].sum()
+print("\nTotal Revenue:", total_revenue)
+
+# Average temperature
+avg_temp = df["Temperature"].mean()
+print("Average Temperature:", avg_temp)
+
+# Most sold ice cream
+most_sold = df.groupby("IceCreamType")["UnitsSold"].sum().idxmax()   # index of maximum value     - idxmax()   , idxmin() - index of minimum value
+print("Most Sold Ice Cream:", most_sold)
+
+# -------------------------------
+# Step 4: Advanced Analysis
+# -------------------------------
+
+# Monthly sales
+monthly_sales = df.groupby("Month")["Revenue"].sum()
+print("\nMonthly Revenue:\n", monthly_sales)
+
+# Temperature vs Sales correlation
+correlation = df["Temperature"].corr(df["UnitsSold"])
+print("\nCorrelation (Temp vs Sales):", correlation)
+
+# -------------------------------
+# Step 5: Business Insights
+# -------------------------------
+
+# Best day sales
+best_day = df.loc[df["Revenue"].idxmax()]
+print("\nBest Day:\n", best_day)
+
+# Worst day sales
+worst_day = df.loc[df["Revenue"].idxmin()]
+print("\nWorst Day:\n", worst_day)
+
+# -------------------------------
+# Step 6: Filtering Example
+# -------------------------------
+
+# Hot days (temp > 35)
+hot_days = df[df["Temperature"] > 35]
+print("\nHot Days Sales Count:", len(hot_days))
+
+# -------------------------------
+# Step 7: Save to CSV
+# -------------------------------
+
+df.to_csv("ice_cream_sales.csv", index=False)
+
+print("\nDataset saved successfully!")
+
+
