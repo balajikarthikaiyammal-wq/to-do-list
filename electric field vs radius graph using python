@@ -1,0 +1,37 @@
+
+# Electric field variation for a charged sphere (inside and outside)
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+Q = 1  # charge
+epsilon0 = 8.85e-12
+R = 1  # radius
+
+# Distance values
+r = np.linspace(0.1, 3, 100)
+
+E = []
+
+for x in r:
+    if x < R:
+        # Inside sphere (E proportional to r)
+        E_val = (Q * x) / (4 * np.pi * epsilon0 * R ** 3)
+    else:
+        # Outside sphere
+        E_val = Q / (4 * np.pi * epsilon0 * x ** 2)
+
+    E.append(E_val)
+
+# Plot
+plt.plot(r, E)
+plt.xlabel("Distance (r)")
+plt.ylabel("Electric Field (E)")
+plt.title("Electric Field of Charged Sphere")
+plt.show()
+
+
+
+
+
