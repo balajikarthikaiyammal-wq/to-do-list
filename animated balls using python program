@@ -1,0 +1,76 @@
+from tkinter import *
+import random
+
+# Create main window
+window = Tk()
+
+# Set window title
+window.title("Advanced Graphics Animation")
+
+# Set window size
+window.geometry("800x600")   #  tkinter.canvas(),   tkinter.label()
+
+# Create drawing canvas
+canvas = Canvas(window, width=800, height=600, bg="pink")
+canvas.pack()
+
+# List to store balls
+balls = []
+
+# Create 10 balls
+for i in range(10):
+
+    x = random.randint(50, 700)
+    y = random.randint(50, 500)
+
+    radius = random.randint(20, 40)
+
+    color = random.choice(
+        ["red", "blue", "green", "orange",
+         "purple", "yellow", "cyan", "pink"]
+    )
+
+    ball = canvas.create_oval(
+        x,
+        y,
+        x + radius,
+        y + radius,
+        fill=color
+    )
+
+    dx = random.randint(2, 6)
+    dy = random.randint(2, 6)
+
+    balls.append([ball, dx, dy])
+
+# Animation function
+def animate():
+
+    for item in balls:
+
+        ball = item[0]
+        dx = item[1]
+        dy = item[2]
+
+        canvas.move(ball, dx, dy)
+
+        position = canvas.coords(ball)
+
+        left = position[0]
+        top = position[1]
+        right = position[2]
+        bottom = position[3]
+
+        if left <= 0 or right >= 800:
+            item[1] = -dx
+
+        if top <= 0 or bottom >= 600:
+            item[2] = -dy
+
+    window.after(20, animate)
+
+# Start animation
+animate()
+
+# Run application
+window.mainloop()
