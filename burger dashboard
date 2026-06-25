@@ -1,0 +1,173 @@
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+
+# -------------------------------------------------
+# PAGE CONFIGURATION
+# -------------------------------------------------
+st.set_page_config(
+    page_title="Burger Sales & Promotion Dashboard",
+    page_icon="🍔",
+    layout="wide"
+)
+
+# -------------------------------------------------
+# SAMPLE DATA
+# -------------------------------------------------
+data = {
+    "Burger": [
+        "Classic Burger",
+        "Cheese Burger",
+        "Chicken Burger",
+        "Veg Burger",
+        "Double Patty Burger"
+    ],
+    "Price": [120, 150, 140, 100, 200],
+    "Quantity Sold": [350, 420, 310, 280, 180],
+    "Promotion": [
+        "Buy 1 Get 1",
+        "20% Discount",
+        "Free Fries",
+        "Student Offer",
+        "Combo Offer"
+    ]
+}
+
+df = pd.DataFrame(data)
+
+# -------------------------------------------------
+# CALCULATIONS
+# -------------------------------------------------
+df["Revenue"] = df["Price"] * df["Quantity Sold"]
+
+total_revenue = df["Revenue"].sum()
+total_burgers = df["Quantity Sold"].sum()
+avg_price = df["Price"].mean()
+
+# -------------------------------------------------
+# SIDEBAR
+# -------------------------------------------------
+st.sidebar.title("🍔 Burger Dashboard")
+
+selected_burger = st.sidebar.multiselect(
+    "Select Burger",
+    options=df["Burger"],
+    default=df["Burger"]
+)
+
+filtered_df = df[df["Burger"].isin(selected_burger)]
+
+# -------------------------------------------------
+# TITLE
+# -------------------------------------------------
+st.title("🍔 Burger Selling & Promotion Dashboard")
+st.markdown("### Real-Time Burger Sales Analytics")
+
+# -------------------------------------------------
+# KPI SECTION
+# -------------------------------------------------
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(
+        label="Total Revenue",
+        value=f"₹{total_revenue:,}"
+    )
+
+with col2:
+    st.metric(
+        label="Total Burgers Sold",
+        value=f"{total_burgers:,}"
+    )
+
+with col3:
+    st.metric(
+        label="Average Price",
+        value=f"₹{avg_price:.2f}"
+    )
+
+st.divider()
+
+# -------------------------------------------------
+# SALES TABLE
+# -------------------------------------------------
+st.subheader("📋 Burger Sales Data")
+st.dataframe(filtered_df, use_container_width=True)
+
+# -------------------------------------------------
+# BAR CHART
+# -------------------------------------------------
+st.subheader("📊 Revenue by Burger")
+
+fig1 = px.bar(
+    filtered_df,
+    x="Burger",
+    y="Revenue",
+    text="Revenue",
+    title="Revenue Comparison"
+)
+
+st.plotly_chart(fig1, use_container_width=True)
+
+# -------------------------------------------------
+# PIE CHART
+# -------------------------------------------------
+st.subheader("🥧 Quantity Sold Distribution")
+
+fig2 = px.pie(
+    filtered_df,
+    names="Burger",
+    values="Quantity Sold",
+    title="Sales Share"
+)
+
+st.plotly_chart(fig2, use_container_width=True)
+
+# -------------------------------------------------
+# PROMOTION SECTION
+# -------------------------------------------------
+st.subheader("🎯 Promotion Campaigns")
+
+for i in range(len(filtered_df)):
+    st.success(
+        f"{filtered_df.iloc[i]['Burger']} → "
+        f"{filtered_df.iloc[i]['Promotion']}"
+    )
+
+# -------------------------------------------------
+# TOP SELLING BURGER
+# -------------------------------------------------
+top_burger = filtered_df.loc[
+    filtered_df["Quantity Sold"].idxmax()
+]
+
+st.subheader("🏆 Best Selling Burger")
+
+st.info(
+    f"""
+    Burger Name : {top_burger['Burger']}
+
+    Quantity Sold : {top_burger['Quantity Sold']}
+
+    Revenue : ₹{top_burger['Revenue']}
+    """
+)
+
+# -------------------------------------------------
+# PROMOTION RECOMMENDATIONS
+# -------------------------------------------------
+st.subheader("🚀 Promotion Suggestions")
+
+st.write("• Weekend Combo Offers")
+st.write("• Buy 1 Get 1 on Slow Moving Burgers")
+st.write("• Free Soft Drink with Double Patty Burger")
+st.write("• Student Discount Campaign")
+st.write("• Loyalty Rewards Program")
+
+# -------------------------------------------------
+# FOOTER
+# -------------------------------------------------
+st.markdown("---")
+st.markdown(
+    "Developed using Python, Streamlit, Pandas and Plotly"
+)
